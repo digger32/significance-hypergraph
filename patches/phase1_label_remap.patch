@@ -1,0 +1,20 @@
+diff --git a/dhgbench/lib_dataset/data_base.py b/dhgbench/lib_dataset/data_base.py
+index 9b60565..bf6de08 100644
+--- a/dhgbench/lib_dataset/data_base.py
++++ b/dhgbench/lib_dataset/data_base.py
+@@ -208,6 +208,15 @@ class HyperDataset(object):
+ 
+     def _initialization_(self):
+         
++        # FIX (env-gated): remap labels to a dense 0..C-1 range so that
++        # max(label) == num_classes-1. Some datasets (e.g. trivago) ship sparse
++        # label ids, which makes len(unique) < max+1 and crashes cross-entropy
++        # with 'Assertion t < n_classes failed'. Set DHG_REMAP_LABELS=1 to enable.
++        import os as _os
++        if _os.environ.get("DHG_REMAP_LABELS") == "1":
++            _u, _inv = self.y.unique(return_inverse=True)
++            self.y = _inv.view(self.y.shape).to(self.y.device)
++            self.data.y = self.y
+         self.num_classes= len(self.y.unique())
+         self.num_features=self.x.shape[1]
+         self.num_nodes=self.x.shape[0]

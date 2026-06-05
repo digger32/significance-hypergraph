@@ -1,0 +1,35 @@
+diff --git a/dhgbench/lib_utils/exp_agent.py b/dhgbench/lib_utils/exp_agent.py
+index d0b2901..6671f24 100644
+--- a/dhgbench/lib_utils/exp_agent.py
++++ b/dhgbench/lib_utils/exp_agent.py
+@@ -4,6 +4,22 @@ import numpy as np
+ #from parameter_parser import parameter_parser
+ import torch
+ from collections import defaultdict
++
++import os as _os, json as _json
++def _dump_perseed(args, task, metrics_dict):
++    """Env-gated: if DHG_DUMP_DIR set, write per-seed metric vectors to JSON.
++    metrics_dict[m] = list (len=num_seeds) of per-seed vectors; test col = index -1."""
++    d=_os.environ.get("DHG_DUMP_DIR")
++    if not d: return
++    out=_os.path.join(d, task, str(args.dname))
++    _os.makedirs(out, exist_ok=True)
++    payload={"method":args.method,"dataset":args.dname,"task":task,
++             "num_seeds":int(args.num_seeds),"metrics":{}}
++    for m,vals in metrics_dict.items():
++        payload["metrics"][m]=[[float(x) for x in (v if hasattr(v,"__len__") else [v])] for v in vals]
++    with open(_os.path.join(out, f"{args.method}.json"),"w") as f:
++        _json.dump(payload,f,indent=1)
++
+ from lib_utils.utils import fix_seed,result_printer,mean_std_metrics
+ from lib_utils.train_agent import Trainer
+ from lib_utils.eval_agent import Evaluator
+@@ -158,6 +174,7 @@ class ExpAgent:
+             for m in result:
+                 metrics_dict[m].append(result[m])
+             
++        _dump_perseed(self.args,'node_cls',metrics_dict)
+         print(f'---------------------------------[Final]--------------------------------------')
+         self.test_dict = defaultdict(list) 
+         for m in metrics_dict:
