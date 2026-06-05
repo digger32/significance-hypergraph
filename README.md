@@ -2,8 +2,7 @@
 
 Code, patches, and per-seed results for the paper:
 
-**A Significance-Aware Leaderboard for Hypergraph Learning: An Independent
-Recomputation and Statistical Audit of DHG-Bench.**
+**Is There a Best Hypergraph Neural Network? A Significance-Aware Recomputation and Statistical Audit of DHG-Bench.**
 
 This repository releases everything needed to regenerate the statistical
 results in the paper from the recomputed per-seed accuracies of the
