@@ -56,8 +56,7 @@ recomputed per-seed accuracies released here.
 
 ## License
 
-Code is released for research use. See `LICENSE` (add an SPDX license, e.g.
-MIT or Apache-2.0, before publishing the repository).
+Code is released for research use. See `LICENSE`.
 
 ## Citation
 
