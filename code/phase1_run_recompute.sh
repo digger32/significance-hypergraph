@@ -17,8 +17,10 @@ old='    def _initialization_(self):\n        \n        self.num_classes= len(se
 new='''    def _initialization_(self):
         
         # Auto-injected by phase1_run_recompute.sh: dense-remap labels so
-        # max(label) == num_classes-1. Fixes trivago's sparse-label crash
-        # (CUDA assert t < n_classes). Active when DHG_REMAP_LABELS=1.
+        # max(label) == num_classes-1. Candidate fix added while diagnosing
+        # the trivago crash (CUDA assert t < n_classes); the released trivago
+        # labels are already dense, so there it is a no-op and does not
+        # remove the crash. Active when DHG_REMAP_LABELS=1.
         import os as _os
         if _os.environ.get("DHG_REMAP_LABELS") == "1":
             _u, _inv = self.y.unique(return_inverse=True)
@@ -34,7 +36,7 @@ else
 fi
 
 export DHG_DUMP_DIR="${DHG_DUMP_DIR:-$REPO/results_phase1}"
-export DHG_REMAP_LABELS=1   # dense-remap labels (fixes trivago 'assert t<n_classes'); needs phase1_label_remap.patch applied
+export DHG_REMAP_LABELS=1   # dense-remap labels (candidate fix; a no-op on trivago's already-dense labels); needs phase1_label_remap.patch applied
 SEEDS="${SEEDS:-20}"
 LOGDIR="$REPO/logs_phase1"; mkdir -p "$LOGDIR" "$DHG_DUMP_DIR"
 : > "$DHG_DUMP_DIR/_status.txt"

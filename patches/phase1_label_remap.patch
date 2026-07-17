@@ -6,10 +6,10 @@ index 9b60565..bf6de08 100644
  
      def _initialization_(self):
          
-+        # FIX (env-gated): remap labels to a dense 0..C-1 range so that
-+        # max(label) == num_classes-1. Some datasets (e.g. trivago) ship sparse
-+        # label ids, which makes len(unique) < max+1 and crashes cross-entropy
-+        # with 'Assertion t < n_classes failed'. Set DHG_REMAP_LABELS=1 to enable.
++        # CANDIDATE FIX (env-gated): remap labels to a dense 0..C-1 range so
++        # that max(label) == num_classes-1. Added while diagnosing the trivago
++        # crash; the released trivago labels are already dense, so there it is
++        # a no-op and does NOT remove the crash. Set DHG_REMAP_LABELS=1 to use.
 +        import os as _os
 +        if _os.environ.get("DHG_REMAP_LABELS") == "1":
 +            _u, _inv = self.y.unique(return_inverse=True)

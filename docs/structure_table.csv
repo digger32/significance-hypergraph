@@ -1,0 +1,13 @@
+dataset,nodes,edges,feat,avg_e,Hedge,classes,density,rho_d,lead,lead_cat,lead_mech,lead_acc,hnn_spread
+walmart-trips-100,88860,69906,100,6.59,0.6,11,0.79,19.2,EDHNN,spatial,set/equivariant,77.4,47.9
+ModelNet40,12311,12311,100,5.0,0.87,40,1.0,12.2,EDHNN,spatial,set/equivariant,98.2,90.7
+actor,16255,10164,50,5.25,0.46,3,0.63,8.9,LEGCN,spectral,line/clique-expansion,86.0,23.7
+NTU2012,2012,2012,100,5.0,0.79,67,1.0,7.7,SheafHyperGNN,spectral,sheaf,89.3,85.0
+coauthor_dblp,41302,22363,1425,4.45,0.87,6,0.54,6.8,AllSetformer,spatial,set/equivariant,91.0,13.0
+coauthor_cora,2708,1072,1433,4.28,0.78,7,0.4,6.7,UniGCNII,spatial,two-stage,83.3,48.8
+cora,2708,1579,1433,3.03,0.75,7,0.58,6.1,HCHA,spectral,spectral-conv,79.1,44.2
+pubmed,19717,7963,500,4.35,0.78,3,0.4,5.1,AllSetformer,spatial,set/equivariant,87.1,43.2
+pokec,14998,2406,65,2.29,0.45,2,0.16,2.3,LEGCN,spectral,line/clique-expansion,59.4,7.9
+amazon,22299,2090,111,3.1,0.37,5,0.09,1.8,EHNN,tensor,set/equivariant,29.3,4.1
+yelp,50758,679302,1862,6.66,0.29,9,13.38,1.5,EDHNN,spatial,set/equivariant,31.9,7.5
+twitch,16812,2627,7,6.23,0.49,2,0.16,0.8,AllSetformer,spatial,set/equivariant,51.7,1.8
